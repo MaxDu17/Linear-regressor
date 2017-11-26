@@ -28,14 +28,14 @@ Y_predict = a * X*X + b * X + c
 
 #loss = tf.reduce_mean(tf.square(Y-Y_predict, name = "loss")) #this creates residual of the entire thing
 loss = tf.losses.huber_loss(Y, Y_predict)
-optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.001).minimize(loss)
+optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.0001).minimize(loss)
 
 with tf.Session() as sess:
     
     sess.run(tf.global_variables_initializer())
     writer = tf.summary.FileWriter('tmp/regression',sess.graph)
     
-    for iteration in range(10000):
+    for iteration in range(70000):
         sess.run(optimizer, feed_dict = {X:x,Y:y})
         tmploss = sess.run(loss, feed_dict = {X:x,Y:y})
         print(tmploss)
