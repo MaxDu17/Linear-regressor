@@ -11,15 +11,14 @@ data = np.asarray([sheet.row_values(i) for i in range(1,sheet.nrows)])
 n_samples = sheet.nrows - 1 #sheets.nrows returns number of rows
 
 tmpx = [float(pair[0]) for pair in data]
-x = tmpx/np.max(tmpx)
+x =(tmpx-np.min(tmpx))/(np.max(tmpx)-np.min(tmpx))
 tmpy = [float(pair[1]) for pair in data]
-y = tmpy/np.max(tmpy)
-
+y =(tmpy-np.min(tmpx))/(np.max(tmpx)-np.min(tmpx))
 #x = [1,2,3] 
 print(x)
 print("separator")
 print(y)
-
+'''
 X = tf.placeholder(tf.float32, name = "input")
 Y = tf.placeholder(tf.float32, name = "output")
 
@@ -37,8 +36,9 @@ with tf.Session() as sess:
     
     sess.run(tf.global_variables_initializer())
     writer = tf.summary.FileWriter('tmp/regression',sess.graph)
-    
-    for iteration in range(70000):
+ 
+
+    for iteration in range(20000):
         sess.run(optimizer, feed_dict = {X:x,Y:y})
         tmploss = sess.run(loss, feed_dict = {X:x,Y:y})
         print(tmploss)
@@ -49,4 +49,4 @@ with tf.Session() as sess:
     print(b.eval())
     print(c.eval())
     
-    
+   ''' 
