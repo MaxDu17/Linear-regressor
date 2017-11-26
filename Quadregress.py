@@ -10,8 +10,11 @@ sheet = book.sheet_by_index(0)
 data = np.asarray([sheet.row_values(i) for i in range(1,sheet.nrows)])
 n_samples = sheet.nrows - 1 #sheets.nrows returns number of rows
 
-x = [float(pair[0]) for pair in data]
-y = [float(pair[1]) for pair in data]
+tmpx = [float(pair[0]) for pair in data]
+x = tmpx/np.max(tmpx)
+tmpy = [float(pair[1]) for pair in data]
+y = tmpy/np.max(tmpy)
+
 #x = [1,2,3] 
 print(x)
 print("separator")
