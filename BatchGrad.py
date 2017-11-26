@@ -33,7 +33,7 @@ with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     writer = tf.summary.FileWriter('tmp/regression',sess.graph)
     
-    for iteration in range(100000):
+    for iteration in range(10000):
         sess.run(optimizer, feed_dict = {X:x,Y:y})
         tmploss = sess.run(loss, feed_dict = {X:x,Y:y})
         print(tmploss)
