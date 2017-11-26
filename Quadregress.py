@@ -10,15 +10,16 @@ sheet = book.sheet_by_index(0)
 data = np.asarray([sheet.row_values(i) for i in range(1,sheet.nrows)])
 n_samples = sheet.nrows - 1 #sheets.nrows returns number of rows
 
-tmpx = [float(pair[0]) for pair in data]
+tmpx = np.asarray([float(pair[0]) for pair in data])
 x =(tmpx-np.min(tmpx))/(np.max(tmpx)-np.min(tmpx))
-tmpy = [float(pair[1]) for pair in data]
-y =(tmpy-np.min(tmpx))/(np.max(tmpx)-np.min(tmpx))
+
+y = np.asarray([float(pair[1]) for pair in data])
+#y =(tmpy-np.min(tmpy))/(np.max(tmpy)-np.min(tmpy))
 #x = [1,2,3] 
 print(x)
 print("separator")
 print(y)
-'''
+
 X = tf.placeholder(tf.float32, name = "input")
 Y = tf.placeholder(tf.float32, name = "output")
 
@@ -30,7 +31,7 @@ Y_predict = a * X*X + b * X + c
 
 #loss = tf.reduce_mean(tf.square(Y-Y_predict, name = "loss")) #this creates residual of the entire thing
 loss = tf.losses.huber_loss(Y, Y_predict)
-optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.0001).minimize(loss)
+optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.1).minimize(loss)
 
 with tf.Session() as sess:
     
@@ -38,7 +39,7 @@ with tf.Session() as sess:
     writer = tf.summary.FileWriter('tmp/regression',sess.graph)
  
 
-    for iteration in range(20000):
+    for iteration in range(10000):
         sess.run(optimizer, feed_dict = {X:x,Y:y})
         tmploss = sess.run(loss, feed_dict = {X:x,Y:y})
         print(tmploss)
@@ -49,4 +50,4 @@ with tf.Session() as sess:
     print(b.eval())
     print(c.eval())
     
-   ''' 
+   
