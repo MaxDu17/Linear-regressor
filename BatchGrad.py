@@ -27,7 +27,7 @@ Y_predict = w * X + b
 
 loss = tf.reduce_mean(tf.square(Y-Y_predict, name = "loss")) #this creates residual of the entire thing
 optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.0035).minimize(loss)
-
+saver = tf.train.Saver()
 with tf.Session() as sess:
     
     sess.run(tf.global_variables_initializer())
@@ -40,6 +40,7 @@ with tf.Session() as sess:
         
             
     writer.close()
+    saver.save(sess, "tmp/regression/model.ckpt")
     print(w.eval())
     print(b.eval())
     
