@@ -27,5 +27,6 @@ Y_predict = w * X + b
 
 with tf.Session() as sess:
     saver.restore(sess, "tmp/regression/model.ckpt")
-    output = sess.run(Y_predict,feed_dict = {X:x})
-    print(output)
+    x_val = input("how many fires?\n")
+    output = sess.run(Y_predict,feed_dict = {X:x_val})
+    print("There will be {} thefts\n".format(int(output)))
